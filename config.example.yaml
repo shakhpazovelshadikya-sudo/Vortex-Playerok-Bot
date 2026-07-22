@@ -1,0 +1,79 @@
+# ==========================================================
+#  Playerok Vortex — конфигурация
+#  Скопируй этот файл в config.yaml и заполни своими данными
+# ==========================================================
+
+telegram:
+  token: "ВАШ_TELEGRAM_BOT_TOKEN"
+  admins: []                   # заполняется автоматически: тот, кто верно введёт пароль ЛК в боте
+  proxy: "" # напр. socks5://user:pass@host:port (можно оставить пустым)
+
+playerok:
+  token: "ВАШ_PLAYEROK_TOKEN"  # значение куки token
+  ddg5: ""                     # значение куки __ddg5_ (если требуется)
+  cookies: ""                  # альтернативно: строка "token=...; __ddg5_=..."
+  proxy: ""                    # http://user:pass@host:port или socks5://...
+  requests_timeout: 15
+
+bot:
+  instance_name: "account1"    # имя инстанса, используется в мультиаккинге и логах
+  keep_online: true            # вечный онлайн
+
+  # Пароль доступа к ЛК бота (устанавливается мастером настройки при первом
+  # запуске в консоли, спрашивается один раз; здесь хранится только хэш+соль,
+  # НЕ пароль в открытом виде). Любой, кто напишет боту /start, должен будет
+  # ввести этот пароль, чтобы стать администратором.
+  access_password_hash: ""
+  access_password_salt: ""
+  online_update_interval: 60   # сек
+
+  auto_restore_items: true     # авто-восстановление товара после продажи
+  auto_confirm_deals: false    # авто-подтверждение сделок (после выдачи товара)
+  auto_confirm_delay: 0        # задержка перед авто-подтверждением, сек
+
+  deal_confirm_reminder:
+    enabled: true
+    delay_minutes: 60          # через сколько после оплаты напомнить покупателю подтвердить
+    repeat_minutes: 180        # повторное напоминание, 0 = не повторять
+    text: >
+      Пожалуйста, не забудьте подтвердить получение заказа в системе Playerok,
+      если у вас всё хорошо 🙌
+
+  welcome_message:
+    enabled: true
+    text: "Здравствуйте! 👋 Спасибо за интерес к моим товарам. Если появятся вопросы — пишите."
+
+  autoraise:
+    enabled: false
+    interval_minutes: 240
+    keywords: []                # если пусто — поднимает все лоты
+
+  notifications:
+    new_deal: true
+    deal_confirmed: true
+    deal_rolled_back: true
+    deal_problem: true
+    deal_problem_resolved: true
+    new_message: true
+    new_review: true
+    item_sent: true
+
+  proxy_rotation:
+    enabled: false
+    list: []                    # список прокси для ротации (SOCKS5/HTTP)
+
+marketplace:
+  # Каталог плагинов, которые распространяются через твой Telegram-канал.
+  # Это ссылка на JSON-файл со списком плагинов (см. plugins_catalog.example.json).
+  catalog_url: ""              # напр. https://raw.githubusercontent.com/.../catalog.json
+  channel: "@Vortexplayrock"    # где покупать платные плагины / брать ссылку на каталог
+  contact: "@Iucdip"            # к кому обращаться за лицензией
+
+  # Секрет для офлайн-проверки лицензионных ключей (см. core/licensing.py).
+  # Держи в секрете, им подписываются продаваемые ключи (tools/generate_license.py).
+  license_secret: "change-me-secret"
+
+  # (опционально) если хочешь более строгую проверку ключей на своём сервере —
+  # укажи сюда URL, бот будет слать туда POST {plugin_id, key, telegram_user_id}
+  # и ждать {"valid": true/false, "message": "..."}.
+  license_check_url: ""
